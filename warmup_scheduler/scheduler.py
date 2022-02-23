@@ -45,10 +45,7 @@ class GradualWarmupScheduler(_LRScheduler):
             for param_group, lr in zip(self.optimizer.param_groups, warmup_lr):
                 param_group['lr'] = lr
         else:
-            if epoch is None:
-                self.after_scheduler.step(metrics, None)
-            else:
-                self.after_scheduler.step(metrics, epoch - self.total_epoch)
+            self.after_scheduler.step(metrics)
 
     def step(self, epoch=None, metrics=None):
         if type(self.after_scheduler) != ReduceLROnPlateau:
